@@ -6,29 +6,13 @@ import Introduction from "./components/introduction/introduction";
 import Title from "./components/title/title";
 import TitleCard from "./components/titlecard/titlecard";
 import MediaCard from "./components/card/cards";
+import { useGetMovies } from "./hooks/useGetMovies";
 
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/movies")
-      .then((response) => {
-        setMovies(response.data);
-        console.log(response.data);
-      })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { movies, loading, error } = useGetMovies();
 
   if (error) {
-    return <p>"Erro! estamos em manutenção"</p>;
+    return <p>Erro! estamos em manutenção</p>;
   }
 
   return (
